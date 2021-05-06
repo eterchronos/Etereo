@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class CompanyDAO {
 	}
 	
 	public List<Company> select(){
-		String sql = "SELECT * FROM empresa";
+		String sql = "SELECT * FROM empresa WHERE status=1";
 		List<Company>listCompany =new ArrayList<Company>();
 		
 		try {
@@ -36,9 +37,10 @@ public class CompanyDAO {
 			company.setRazaoSocial(setResult.getString("razao_social"));
 			company.setCidade(setResult.getString("cidade"));
 			company.setUf(setResult.getString("uf"));
+			company.setId(setResult.getInt("id"));
 			listCompany.add(company);
 		}
-		}catch(Exception e) {
+		}catch(SQLException e) {
 			System.out.println(e);
 		}
 		return listCompany;

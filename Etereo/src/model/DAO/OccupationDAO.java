@@ -25,13 +25,14 @@ public class OccupationDAO {
 		}
 	}
 	public List<Occupation> select(){
-		String sql="SELECT * FROM cargo";
+		String sql="SELECT * FROM cargo WHERE status=1";
 		List<Occupation>occupationList = new ArrayList<Occupation>();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			ResultSet setResult = stmt.executeQuery();
 			while(setResult.next()) {
 				Occupation occupation = new Occupation();
+				occupation.setId(setResult.getInt("id"));
 				occupation.setCargo(setResult.getString("cargo"));
 				occupationList.add(occupation);
 			}
