@@ -27,7 +27,7 @@ public class EmployeeDAO {
 	}
 	
 	public List<Employee> select(){
-		String sql = "SELECT * FROM funcionarios";
+		String sql = "SELECT * FROM funcionarios as f INNER JOIN cargo ON f.cargo_cargo = cargo.id;";
 		List<Employee>listEmployee = new ArrayList<Employee>();
 		
 		try {
@@ -36,7 +36,8 @@ public class EmployeeDAO {
 			while(setResult.next()) {
 				Employee employee = new Employee();
 				employee.setId(setResult.getInt("id"));
-				employee.setEmpresa(setResult.getInt("empresa_id"));
+				employee.setCargo(setResult.getInt("cargo_cargo"));
+			    employee.setCargo_key(setResult.getString("cargo"));
 				employee.setNome(setResult.getString("nome"));
 				employee.setStatus(setResult.getInt("status"));
 				employee.setIdade(setResult.getInt("idade"));
@@ -50,17 +51,17 @@ public class EmployeeDAO {
 	}
 	
 	public boolean insert(Employee employee) {
-		String sql = "INSERT INTO `funcionarios`(`empresa_id`,`cargo_cargo`,`nome`,`status`,`idade`,`salario`) VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO `funcionarios`(`cargo_cargo`,`nome`,`status`,`idade`,`salario`) VALUES(?,?,?,?,?)";
 		
 		try {
 			
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, employee.getEmpresa());
-			stmt.setString(2, employee.getCargo());
-			stmt.setString(3, employee.getNome());
-			stmt.setInt(4, employee.getStatus());
-			stmt.setInt(5, employee.getIdade());
-			stmt.setDouble(6, employee.getSalario());
+		
+			stmt.setInt(1, employee.getCargo());
+			stmt.setString(2, employee.getNome());
+			stmt.setInt(3, employee.getStatus());
+			stmt.setInt(4, employee.getIdade());
+			stmt.setDouble(5, employee.getSalario());
 			stmt.execute();
 			System.out.println("person added.");
 			return true;
@@ -85,16 +86,15 @@ public class EmployeeDAO {
 	}
 	
 	public boolean update(Employee employee) {
-		String sql ="UPDATE `funcionarios` SET `empresa_id`=?,`cargo_cargo`=?,`nome`=?,`idade`=?,`salario`=? WHERE `id`=?";
+		String sql ="UPDATE `funcionarios` SET `cargo_cargo`=?,`nome`=?,`idade`=?,`salario`=? WHERE `id`=?";
 		
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, employee.getEmpresa());
-			stmt.setString(2, employee.getCargo());
-			stmt.setString(3, employee.getNome());
-			stmt.setInt(4, employee.getIdade());
-			stmt.setDouble(5, employee.getSalario());
-			stmt.setInt(6, employee.getId());
+			stmt.setInt(1, employee.getCargo());
+			stmt.setString(2, employee.getNome());
+			stmt.setInt(3, employee.getIdade());
+			stmt.setDouble(4, employee.getSalario());
+			stmt.setInt(5, employee.getId());
 			stmt.execute();
 			return true;
 		}catch(Exception e) {

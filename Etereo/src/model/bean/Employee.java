@@ -3,25 +3,36 @@ package model.bean;
 public class Employee {
 
 	private int id;
-	private int empresa;
-	private String cargo;
+	private int cargo;
+	private String cargo_key;
+	
 	private String nome;
 	private int status;
 	private int idade;
 	private double salario;
-	
+
+
+	private String data;
 	public Employee() {}
 
-	public Employee(int id, int empresa, String cargo, String nome, int status, int idade, double salario) {
+	public Employee(int id, String cargo_key, int cargo, String nome, int status, int idade, double salario, String data) {
 		this.id = id;
-		this.empresa = empresa;
 		this.cargo = cargo;
+		this.cargo_key = cargo_key;
 		this.nome = nome;
 		this.status = status;
 		this.idade = idade;
 		this.salario = salario;
+		this.data = data;
 	}
 	
+	public String getCargo_key() {
+		return cargo_key;
+	}
+
+	public void setCargo_key(String cargo_key) {
+		this.cargo_key = cargo_key;
+	}
 	
 	public int getId() {
 		return id;
@@ -31,19 +42,20 @@ public class Employee {
 		this.id = id;
 	}
 
-	public int getEmpresa() {
-		return empresa;
+	public String getData() {
+		return data;
 	}
 
-	public void setEmpresa(int empresa) {
-		this.empresa = empresa;
+	public void setData(String data) {
+		this.data = data;
 	}
 
-	public String getCargo() {
+
+	public int getCargo() {
 		return cargo;
 	}
 
-	public void setCargo(String cargo) {
+	public void setCargo(int cargo) {
 		this.cargo = cargo;
 	}
 
@@ -80,6 +92,6 @@ public class Employee {
 	}
 	@Override
 	public String toString() {
-		return "id: "+this.id+"\nEmpresa: "+this.empresa+"\nCargo: "+this.cargo+"\nNome: "+this.nome+"\nstatus: "+this.status+"\nIdade: "+this.idade+"\nSalario: "+this.salario;
+		return "id: "+this.id+"\nCargo Key: "+this.cargo+"\nCargo: "+this.cargo+"\nNome: "+this.nome+"\nstatus: "+this.status+"\nIdade: "+this.idade+"\nSalario: "+this.salario;
 	}
 }

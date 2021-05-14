@@ -12,23 +12,16 @@ import model.bean.Occupation;
 public class OccupationDAO {
 
 	private Connection connection;
-	
+	ConnectionFactory connectionFactory = new ConnectionFactory();
+
 	public OccupationDAO() {
-		try {
-			final String DATABASE_URL = "jdbc:mysql://localhost:3306/circos";
-			String usr ="root";
-			String pw = "123";
-			this.connection = DriverManager.getConnection(DATABASE_URL,usr,pw);
-			
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+		
 	}
 	public List<Occupation> select(){
 		String sql="SELECT * FROM cargo WHERE status=1";
 		List<Occupation>occupationList = new ArrayList<Occupation>();
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
 			ResultSet setResult = stmt.executeQuery();
 			while(setResult.next()) {
 				Occupation occupation = new Occupation();
@@ -45,7 +38,7 @@ public class OccupationDAO {
 	public boolean insert(String cargo) {
 		String sql= "INSERT INTO `cargo`(`cargo`) VALUES (?)";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
 			stmt.setString(1, cargo);
 			stmt.execute();
 			return true;
@@ -58,7 +51,7 @@ public class OccupationDAO {
 	public boolean statusChanger(int id,int status) {
 		String sql="UPDATE `cargo` SET `status`=? WHERE `id`=?";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
 			stmt.setInt(1, status);
 			stmt.setInt(2, id);
 			stmt.execute();
@@ -73,7 +66,7 @@ public class OccupationDAO {
 	public boolean update(Occupation occupation) {
 		String sql="UPDATE `cargo` SET `cargo`=? WHERE `id`=?";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
 			stmt.setString(1, occupation.getCargo());
 			stmt.setInt(2, occupation.getId());
 			stmt.execute();

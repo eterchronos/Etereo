@@ -11,10 +11,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import Ui.CompanyUi;
 public class Dashboard {
 	OccupationUi occupationUi = new OccupationUi();
-	CompanyUi		 companyUi	  = new CompanyUi();
+	ExpenseUi		 expenseUi	  = new ExpenseUi();
 	
 	private JFrame windowDashboard 		= new JFrame();
 	private JFrame windowOccupation 	= new JFrame();
@@ -22,7 +21,8 @@ public class Dashboard {
 	private JMenu menuManager 			= new JMenu("Manager");
 	private JMenuItem miOccupation 		= new JMenuItem("Occupation");
 	private JMenuItem miCompany 		= new JMenuItem("Company");
-	
+	private JMenuItem miExpense 		= new JMenuItem("Expense Manager");
+
 	private JTextField jtfOccupationId	= new JTextField();
 	private JTextField jtfOccupationTxt	= new JTextField();
 	
@@ -54,8 +54,8 @@ public class Dashboard {
 		
 		menuBar.setBounds(0,0,800,20);
 		menuBar.add(menuManager);
-		menuManager.add(miCompany);
 		menuManager.add(miOccupation);
+		menuManager.add(miExpense);
 		}
 
 	
@@ -67,10 +67,11 @@ public class Dashboard {
 				occupationUi.windowUi();
 				
 			}});
-		miCompany.addActionListener(new ActionListener() {
+
+		miExpense.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				companyUi.companyUi();
+				expenseUi.windowUi();
 				
 			}});
 	}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<Pane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainLand.Controller">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#192a39" height="600.0" stroke="#404353" strokeType="INSIDE" width="290.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebebeb" height="600.0" layoutX="287.0" stroke="BLACK" strokeType="INSIDE" width="900.0" />
+      <Button id="btn" fx:id="btnEmployee" layoutX="68.0" layoutY="112.0" mnemonicParsing="false" onAction="#openEmployeeManager" prefHeight="43.0" prefWidth="155.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8;" text="Funcionarios" />
+      <Button id="btn" fx:id="btnOccupation" layoutX="68.0" layoutY="170.0" mnemonicParsing="false" onAction="#openOccupationManager" prefHeight="43.0" prefWidth="155.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8;" text="Cargos" />
+      <Button id="btn" fx:id="btnExpense" layoutX="68.0" layoutY="229.0" mnemonicParsing="false" onAction="#openExpenseManager" prefHeight="43.0" prefWidth="155.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8;" text="Despesas" />
+   </children>
+</Pane>

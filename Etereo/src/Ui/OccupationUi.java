@@ -31,6 +31,7 @@ public class OccupationUi {
 	private JLabel lblOccupation				= new JLabel("Add an occupation here:");
 	
 	public OccupationUi() {
+		
 		readTable();
 		listeners();
 		
@@ -163,6 +164,7 @@ public class OccupationUi {
 				
 				occupationDAO.update(occupationObj);
 				readTable();
+				clearTextFields();
 				}
 			}});
 

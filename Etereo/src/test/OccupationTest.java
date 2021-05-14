@@ -1,19 +1,15 @@
 package test;
 
+import Ui.OccupationUi;
 import model.DAO.OccupationDAO;
-import model.bean.Occupation;
 
 public class OccupationTest {
 
 	public static void main(String[] args) {
-		Occupation o = new Occupation();
+		OccupationUi o = new OccupationUi();
 		OccupationDAO oDAO = new OccupationDAO();
-		
-		o.setCargo("Trapezista");
-		o.setId(7);
-		oDAO.update(o);
-		System.out.println(oDAO.select());
-
+		OccupationUi oUi = new OccupationUi();
+		oUi.windowUi();
 	}
 
 }
