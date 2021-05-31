@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -11,11 +12,12 @@ import java.io.IOException;
 public class EmployeeFx extends Application {
 
     public void start(Stage primaryStage) throws IOException {
-        Parent pane = FXMLLoader.load(getClass().getResource("employee.fxml"));
+        Pane pane = FXMLLoader.load(getClass().getResource("employee.fxml"));
 
         primaryStage.setTitle("Gerenciador de Funcionarios");
-        primaryStage.setScene(new Scene(pane, 600, 300));
-
+        primaryStage.setScene(new Scene(pane, 600, 384));
+        primaryStage.setResizable(false);
+        primaryStage.setAlwaysOnTop(true);
         primaryStage.show();
 
     }

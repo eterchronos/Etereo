@@ -66,5 +66,7 @@ public class Expense {
 	public String toString() {
 		return "Name: "+this.expenseName+"\nValue: "+this.value+"\nStatus: "+this.status+"\nData Creation: "+this.dataOfCreation;
 	}
+
+
 	
 }

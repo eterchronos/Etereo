@@ -1,9 +1,6 @@
 package model.DAO;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,27 +8,17 @@ import model.bean.Employee;
 
 public class EmployeeDAO {
 	
-	private Connection connection;
-	
-	public EmployeeDAO() {
-		try {
-			
-			final String DATABASE_URL = "jdbc:mysql://localhost:3306/circos";
-			String usr = "root";
-			String pw = "123";
-			this.connection = DriverManager.getConnection(DATABASE_URL,usr,pw);
-			System.out.println("Sql Connected.");			
-		}catch(Exception e) {
-			System.out.println(e);
-		}
-	}
+
+	private ConnectionFactory connectionFactory = new ConnectionFactory();
+	Employee employee = new Employee();
+
 	
 	public List<Employee> select(){
-		String sql = "SELECT * FROM funcionarios as f INNER JOIN cargo ON f.cargo_cargo = cargo.id;";
+		String sql = "SELECT * FROM funcionarios as f INNER JOIN cargo ON f.cargo_cargo = cargo.id WHERE f.status=1";
 		List<Employee>listEmployee = new ArrayList<Employee>();
 		
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
 			ResultSet setResult = stmt.executeQuery();
 			while(setResult.next()) {
 				Employee employee = new Employee();
@@ -42,6 +29,8 @@ public class EmployeeDAO {
 				employee.setStatus(setResult.getInt("status"));
 				employee.setIdade(setResult.getInt("idade"));
 				employee.setSalario(setResult.getDouble("salario"));
+				employee.setData(setResult.getString("dataCriacao"));
+				employee.setExtra(setResult.getString("funcaoExtra"));
 				listEmployee.add(employee);
 			}
 		
@@ -51,17 +40,18 @@ public class EmployeeDAO {
 	}
 	
 	public boolean insert(Employee employee) {
-		String sql = "INSERT INTO `funcionarios`(`cargo_cargo`,`nome`,`status`,`idade`,`salario`) VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO `funcionarios`(`cargo_cargo`,`nome`,`idade`,`salario`,`funcaoExtra`) VALUES(?,?,?,?,?)";
 		
 		try {
 			
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
 		
 			stmt.setInt(1, employee.getCargo());
 			stmt.setString(2, employee.getNome());
-			stmt.setInt(3, employee.getStatus());
-			stmt.setInt(4, employee.getIdade());
-			stmt.setDouble(5, employee.getSalario());
+			stmt.setInt(3, employee.getIdade());
+			stmt.setDouble(4, employee.getSalario());
+			stmt.setString(5,employee.getExtra());
+
 			stmt.execute();
 			System.out.println("person added.");
 			return true;
@@ -74,7 +64,7 @@ public class EmployeeDAO {
 		String sql="UPDATE `funcionarios` SET `status`=? WHERE `id`=?";
 		
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
 			stmt.setInt(1, status);
 			stmt.setInt(2, id);
 			stmt.execute();
@@ -86,16 +76,19 @@ public class EmployeeDAO {
 	}
 	
 	public boolean update(Employee employee) {
-		String sql ="UPDATE `funcionarios` SET `cargo_cargo`=?,`nome`=?,`idade`=?,`salario`=? WHERE `id`=?";
+		String sql ="UPDATE `funcionarios` SET `cargo_cargo`=?,`nome`=?,`idade`=?,`salario`=?,`funcaoExtra`=? WHERE `id`=?";
 		
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
 			stmt.setInt(1, employee.getCargo());
 			stmt.setString(2, employee.getNome());
 			stmt.setInt(3, employee.getIdade());
 			stmt.setDouble(4, employee.getSalario());
-			stmt.setInt(5, employee.getId());
+			stmt.setString(5,employee.getExtra());
+			stmt.setInt(6, employee.getId());
+
 			stmt.execute();
+			System.out.println("status of: "+employee.getNome()+" Updated: ");
 			return true;
 		}catch(Exception e) {
 			System.out.println(e);
@@ -103,9 +96,116 @@ public class EmployeeDAO {
 		return false;
 	}
 	
+	public Double getTotalEmployeeSalary(){
+		String sql = "SELECT SUM(salario) AS totalEmDinheiro FROM funcionarios";
+
+		try {
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			ResultSet setResult = stmt.executeQuery();
+			while(setResult.next()){
+				employee.setSalario(setResult.getDouble("totalEmDinheiro"));
+				return employee.getSalario();
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return employee.getSalario();
+	}
+	public Double getTotalEmployeeSalaryByYear(){
+		String sql = "SELECT SUM(salario) *12 AS totalEmDinheiroMes FROM funcionarios";
+
+		try {
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			ResultSet setResult = stmt.executeQuery();
+			while(setResult.next()){
+				employee.setSalario(setResult.getDouble("totalEmDinheiroMes"));
+				return employee.getSalario();
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return employee.getSalario();
+	}
+
+	public Double getTotalEmployeeSalaryByMounth(){
+		String sql = "SELECT SUM(salario) AS totalEmDinheiroMes FROM funcionarios";
+
+		try {
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			ResultSet setResult = stmt.executeQuery();
+			while(setResult.next()){
+				employee.setSalario(setResult.getDouble("totalEmDinheiroMes"));
+				return employee.getSalario();
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return employee.getSalario();
+	}
+
+	public Double getTotalEmployeeSalaryByWeak(){
+		String sql = "SELECT SUM(salario) /4 AS totalEmDinheiroSemana FROM funcionarios";
+
+		try {
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			ResultSet setResult = stmt.executeQuery();
+			while(setResult.next()){
+				employee.setSalario(setResult.getDouble("totalEmDinheiroSemana"));
+				return employee.getSalario();
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return employee.getSalario();
+	}
+
+	public Double getTotalEmployeeSalaryByHour(){
+		String sql = "SELECT SUM(salario) /30/24 AS totalEmDinheiroHoras FROM funcionarios";
+
+		try {
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			ResultSet setResult = stmt.executeQuery();
+			while(setResult.next()){
+				employee.setSalario(setResult.getDouble("totalEmDinheiroHoras"));
+				return employee.getSalario();
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return employee.getSalario();
+	}
+
+	public Double getTotalEmployeeSalaryByDay(){
+		String sql = "SELECT SUM(salario) /30 AS totalEmDinheiroDia FROM funcionarios";
+
+		try {
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			ResultSet setResult = stmt.executeQuery();
+			while(setResult.next()){
+				employee.setSalario(setResult.getDouble("totalEmDinheiroDia"));
+				return employee.getSalario();
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return employee.getSalario();
+	}
 	
-	
-	
+	public int getTotalEmployee(){
+		String sql = "SELECT COUNT(nome) AS totalEmFuncionarios FROM funcionarios";
+
+		try {
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			ResultSet setResult = stmt.executeQuery();
+			while(setResult.next()){
+				employee.setAmountEmployee(setResult.getInt("totalEmFuncionarios"));
+				return employee.getAmountEmployee();
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+			return employee.getAmountEmployee();
+	}
 	
 	
 	

@@ -15,7 +15,8 @@ public class ExpenseDAO {
 
 	
 	ConnectionFactory connectionFactory = new ConnectionFactory();
-	
+	Expense expense = new Expense();
+
 	public ExpenseDAO() {
 	
 		
@@ -82,19 +83,102 @@ public class ExpenseDAO {
 		return false;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public Double getTotalExpense(){
+		String sql = "SELECT SUM(valor) AS totalEmDespesa FROM despesa";
+
+		try {
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			ResultSet setResult = stmt.executeQuery();
+			while(setResult.next()){
+				expense.setValue(setResult.getDouble("totalEmDespesa"));
+				return expense.getValue();
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return expense.getValue();
+	}
+
+	public Double getTotalExpenseByDay(){
+		String sql = "SELECT SUM(valor) /30 AS totalEmDespesa FROM despesa";
+
+		try {
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			ResultSet setResult = stmt.executeQuery();
+			while(setResult.next()){
+				expense.setValue(setResult.getDouble("totalEmDespesa"));
+				return expense.getValue();
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return expense.getValue();
+	}
+
+	public Double getTotalExpenseByWeak(){
+		String sql = "SELECT SUM(valor) /4 AS totalEmDespesa FROM despesa";
+
+		try {
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			ResultSet setResult = stmt.executeQuery();
+			while(setResult.next()){
+				expense.setValue(setResult.getDouble("totalEmDespesa"));
+				return expense.getValue();
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return expense.getValue();
+	}
+
+	public Double getTotalExpenseByMonth(){
+		String sql = "SELECT SUM(valor) AS totalEmDespesa FROM despesa";
+
+		try {
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			ResultSet setResult = stmt.executeQuery();
+			while(setResult.next()){
+				expense.setValue(setResult.getDouble("totalEmDespesa"));
+				return expense.getValue();
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return expense.getValue();
+	}
+
+
+	public Double getTotalExpenseByHour(){
+		String sql = "SELECT SUM(valor) /30/24 AS totalEmDespesa FROM despesa";
+
+		try {
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			ResultSet setResult = stmt.executeQuery();
+			while(setResult.next()){
+				expense.setValue(setResult.getDouble("totalEmDespesa"));
+				return expense.getValue();
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return expense.getValue();
+	}
+
+	public Double getTotalExpenseByYear(){
+		String sql = "SELECT SUM(valor) *12 AS totalEmDespesa FROM despesa";
+
+		try {
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			ResultSet setResult = stmt.executeQuery();
+			while(setResult.next()){
+				expense.setValue(setResult.getDouble("totalEmDespesa"));
+				return expense.getValue();
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return expense.getValue();
+	}
 	
 	
 	

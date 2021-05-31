@@ -35,12 +35,13 @@ public class OccupationDAO {
 		}
 		return occupationList;
 	}
-	public boolean insert(String cargo) {
+	public boolean insert(Occupation cargo) {
 		String sql= "INSERT INTO `cargo`(`cargo`) VALUES (?)";
 		try {
 			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
-			stmt.setString(1, cargo);
+			stmt.setString(1, cargo.getCargo());
 			stmt.execute();
+			System.out.println("person added.");
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);

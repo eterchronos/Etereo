@@ -5,17 +5,19 @@ public class Employee {
 	private int id;
 	private int cargo;
 	private String cargo_key;
-	
 	private String nome;
-	private int status;
+	private int status = 1;
 	private int idade;
 	private double salario;
-
-
 	private String data;
+	private String extra;
+	private int amountEmployee;
+
+
+
 	public Employee() {}
 
-	public Employee(int id, String cargo_key, int cargo, String nome, int status, int idade, double salario, String data) {
+	public Employee(int id, String cargo_key, int cargo, String nome, int status, int idade, double salario, String data, int amountEmployee) {
 		this.id = id;
 		this.cargo = cargo;
 		this.cargo_key = cargo_key;
@@ -24,8 +26,25 @@ public class Employee {
 		this.idade = idade;
 		this.salario = salario;
 		this.data = data;
+		this.amountEmployee = amountEmployee;
 	}
-	
+
+	public int getAmountEmployee() {
+		return amountEmployee;
+	}
+
+	public void setAmountEmployee(int amount) {
+		this.amountEmployee = amount;
+	}
+
+	public String getExtra() {
+		return extra;
+	}
+
+	public void setExtra(String extra) {
+		this.extra = extra;
+	}
+
 	public String getCargo_key() {
 		return cargo_key;
 	}
@@ -92,6 +111,6 @@ public class Employee {
 	}
 	@Override
 	public String toString() {
-		return "id: "+this.id+"\nCargo Key: "+this.cargo+"\nCargo: "+this.cargo+"\nNome: "+this.nome+"\nstatus: "+this.status+"\nIdade: "+this.idade+"\nSalario: "+this.salario;
+		return "id: "+this.id+"\nCargo Key: "+this.cargo_key+"\nCargo: "+this.cargo+"\nNome: "+this.nome+"\nstatus: "+this.status+"\nIdade: "+this.idade+"\nSalario: "+this.salario;
 	}
 }
